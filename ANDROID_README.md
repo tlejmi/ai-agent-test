@@ -1,10 +1,10 @@
-# Android OAuth0 Authentication Application
+# Android Auth0 Authentication Application
 
-A complete Android application built with **Kotlin** that demonstrates secure user authentication using **OAuth0 SDK** with **PKCE (Proof Key for Code Exchange)** flow.
+A complete Android application built with **Kotlin** that demonstrates secure user authentication using **Auth0 SDK** with **PKCE (Proof Key for Code Exchange)** flow.
 
 ## 📱 Features
 
-- ✅ **OAuth0 Authentication** with PKCE flow for enhanced security
+- ✅ **Auth0 Authentication** with PKCE flow for enhanced security
 - ✅ **Sign Up** functionality for new user registration
 - ✅ **Login** with secure token management
 - ✅ **Logout** with token revocation
@@ -27,7 +27,7 @@ app/
 │   │   ├── MainActivity.kt              # Login screen
 │   │   ├── SignUpActivity.kt            # User registration screen
 │   │   ├── HomeActivity.kt              # User profile screen
-│   │   ├── Auth0Manager.kt              # OAuth0 operations handler
+│   │   ├── Auth0Manager.kt              # Auth0 operations handler
 │   │   └── SecureTokenManager.kt        # Encrypted token storage
 │   ├── res/
 │   │   ├── layout/
@@ -35,7 +35,7 @@ app/
 │   │   │   ├── activity_sign_up.xml     # Sign up layout
 │   │   │   └── activity_home.xml        # Home layout
 │   │   ├── values/
-│   │   │   └── strings.xml              # OAuth0 config & strings
+│   │   │   └── strings.xml              # Auth0 config & strings
 │   │   └── xml/
 │   │       ├── backup_rules.xml
 │   │       └── data_extraction_rules.xml
@@ -58,11 +58,11 @@ app/
 
 - **Android Studio** (Arctic Fox or later)
 - **JDK 8** or higher
-- **OAuth0 Account** ([Sign up here](https://auth0.com/))
+- **Auth0 Account** ([Sign up here](https://auth0.com/))
 
-### 1. OAuth0 Configuration
+### 1. Auth0 Configuration
 
-1. **Create an OAuth0 Application**:
+1. **Create an Auth0 Application**:
    - Go to [Auth0 Dashboard](https://manage.auth0.com/)
    - Create a new **Native Application**
    - Note down your **Domain** and **Client ID**
@@ -85,7 +85,7 @@ app/
 
 ### 2. Update Application Configuration
 
-Open `app/src/main/res/values/strings.xml` and replace the OAuth0 credentials:
+Open `app/src/main/res/values/strings.xml` and replace the Auth0 credentials:
 
 ```xml
 <string name="com_auth0_domain">YOUR_AUTH0_DOMAIN.auth0.com</string>
@@ -111,7 +111,7 @@ Open `app/src/main/res/values/strings.xml` and replace the OAuth0 credentials:
 
 1. **Launch the app** → Opens Login screen
 2. **Enter email and password**
-3. **Tap "Login"** → Opens browser for OAuth0 authentication
+3. **Tap "Login"** → Opens browser for Auth0 authentication
 4. **Authenticate** → Redirected back to app
 5. **Home screen** displays user profile
 
@@ -133,14 +133,14 @@ Open `app/src/main/res/values/strings.xml` and replace the OAuth0 credentials:
 ### MainActivity (Login Screen)
 
 - Validates email and password inputs
-- Performs OAuth0 login with PKCE flow
+- Performs Auth0 login with PKCE flow
 - Handles authentication errors
 - Navigates to Home screen on success
 
 ### SignUpActivity (Registration Screen)
 
 - Validates email, password, and password confirmation
-- Creates new user via OAuth0 Management API
+- Creates new user via Auth0 Management API
 - Provides error handling and retry logic
 - Navigates to Home screen on success
 
@@ -154,7 +154,7 @@ Open `app/src/main/res/values/strings.xml` and replace the OAuth0 credentials:
 
 ### Auth0Manager
 
-- Centralizes all OAuth0 operations
+- Centralizes all Auth0 operations
 - Implements login, sign up, logout, and token refresh
 - Uses PKCE flow for enhanced security
 - Manages token lifecycle
@@ -178,7 +178,7 @@ Open `app/src/main/res/values/strings.xml` and replace the OAuth0 credentials:
 ## 🔧 Dependencies
 
 ```kotlin
-// OAuth0 SDK
+// Auth0 SDK
 implementation("com.auth0.android:auth0:2.10.2")
 
 // Security for encrypted storage
@@ -227,10 +227,10 @@ The app requires internet permission, configured in `AndroidManifest.xml`:
 
 ## 🔒 Security Best Practices
 
-1. **Never commit OAuth0 credentials** to version control
+1. **Never commit Auth0 credentials** to version control
 2. **Use environment variables** for sensitive data in production
 3. **Enable ProGuard** for release builds
-4. **Keep OAuth0 SDK updated** to latest version
+4. **Keep Auth0 SDK updated** to latest version
 5. **Implement certificate pinning** for production apps
 6. **Use biometric authentication** for enhanced security (optional)
 
@@ -243,7 +243,7 @@ The app requires internet permission, configured in `AndroidManifest.xml`:
 **Solution**: Check internet connection and Auth0 configuration
 
 ### Issue: "Invalid credentials"
-**Solution**: Verify OAuth0 domain and client ID in `strings.xml`
+**Solution**: Verify Auth0 domain and client ID in `strings.xml`
 
 ### Issue: "User already exists"
 **Solution**: User is already registered, use login instead
@@ -260,8 +260,8 @@ Contributions are welcome! Please follow the existing code style and add tests f
 
 For issues or questions, please refer to:
 - [Auth0 Documentation](https://auth0.com/docs)
-- [OAuth0 Android SDK](https://github.com/auth0/Auth0.Android)
+- [Auth0 Android SDK](https://github.com/auth0/Auth0.Android)
 
 ---
 
-**Built with ❤️ using Kotlin and OAuth0**
+**Built with ❤️ using Kotlin and Auth0**

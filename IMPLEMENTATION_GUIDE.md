@@ -1,23 +1,23 @@
-# Complete Android OAuth0 Project Implementation Guide
+# Complete Android Auth0 Project Implementation Guide
 
 ## 📋 Overview
 
-This document provides a comprehensive implementation guide for the Android OAuth0 Authentication application. The project demonstrates industry-standard security practices including OAuth2 with PKCE flow, encrypted token storage, and Material Design UI.
+This document provides a comprehensive implementation guide for the Android Auth0 Authentication application. The project demonstrates industry-standard security practices including OAuth2 with PKCE flow, encrypted token storage, and Material Design UI.
 
 ## 🎯 Completed Features
 
 ### ✅ 1. Project Setup
 - **Complete Android project structure** created with Kotlin
 - **Gradle build files** configured with all required dependencies
-- **OAuth0 SDK 2.10.2** integration
+- **Auth0 SDK 2.10.2** integration
 - **Internet permissions** configured in AndroidManifest.xml
 - **Material Design 3** theme implementation
 
 ### ✅ 2. Authentication Flow
 
 #### Login Functionality (MainActivity.kt)
-- **OAuth0 PKCE Flow** implementation for secure authentication
-- Opens browser for OAuth0 authentication
+- **Auth0 PKCE Flow** implementation for secure authentication
+- Opens browser for Auth0 authentication
 - Handles authentication callback automatically
 - Validates email and password fields:
   - Email format validation using Android Patterns
@@ -31,7 +31,7 @@ This document provides a comprehensive implementation guide for the Android OAut
   - User-friendly error messages
 
 #### Sign Up Functionality (SignUpActivity.kt)
-- **User registration** via OAuth0 Management API
+- **User registration** via Auth0 Management API
 - Field validation:
   - Email format validation
   - Password minimum 8 characters
@@ -116,7 +116,7 @@ All screens use Material Design 3 components:
 
 ### ✅ 5. Configuration
 
-#### OAuth0 Configuration (strings.xml)
+#### Auth0 Configuration (strings.xml)
 ```xml
 <string name="com_auth0_domain">YOUR_AUTH0_DOMAIN.auth0.com</string>
 <string name="com_auth0_client_id">YOUR_CLIENT_ID</string>
@@ -186,7 +186,7 @@ All activities implement robust error handling:
 
 ### Core Dependencies
 ```kotlin
-// OAuth0 SDK - Latest stable version
+// Auth0 SDK - Latest stable version
 implementation("com.auth0.android:auth0:2.10.2")
 
 // Security - Encrypted storage
@@ -205,7 +205,7 @@ implementation("androidx.appcompat:appcompat:1.6.1")
 implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
-// Network - OkHttp (used by OAuth0)
+// Network - OkHttp (used by Auth0)
 implementation("com.squareup.okhttp3:okhttp:4.12.0")
 implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
@@ -238,7 +238,7 @@ App Launch → Check Logged In?
 └─ No  → Show Login Screen
          ├─ Enter Credentials
          ├─ Tap Login
-         ├─ Open Browser (OAuth0)
+         ├─ Open Browser (Auth0)
          ├─ Authenticate
          ├─ Callback to App
          ├─ Save Tokens (Encrypted)
@@ -253,7 +253,7 @@ Login Screen → Tap Sign Up Link
               ├─ Enter Email, Password, Confirm
               ├─ Validate Inputs
               ├─ Tap Sign Up
-              ├─ Create User (OAuth0 API)
+              ├─ Create User (Auth0 API)
               ├─ Save Tokens (Encrypted)
               ├─ Fetch Profile (Optional)
               └─ Navigate to Home
@@ -273,7 +273,7 @@ Home Screen → Tap Logout
 
 To use this project, follow these steps:
 
-- [ ] **Create OAuth0 Account** at https://auth0.com
+- [ ] **Create Auth0 Account** at https://auth0.com
 - [ ] **Create Native Application** in Auth0 Dashboard
 - [ ] **Configure Callback URLs** in Auth0:
   - `demo://YOUR_DOMAIN/android/com.example.oauth0authapp/callback`
@@ -351,7 +351,7 @@ To use this project, follow these steps:
 ### Before Production Deployment
 
 #### Required Changes
-1. **Replace OAuth0 credentials** in strings.xml
+1. **Replace Auth0 credentials** in strings.xml
 2. **Add signing configuration** for release builds
 3. **Enable ProGuard** minification
 4. **Add certificate pinning** for API calls
@@ -376,10 +376,10 @@ To use this project, follow these steps:
 
 ## 📚 Additional Resources
 
-### OAuth0 Documentation
+### Auth0 Documentation
 - [Auth0 Android Quickstart](https://auth0.com/docs/quickstart/native/android)
 - [Auth0 Android SDK](https://github.com/auth0/Auth0.Android)
-- [OAuth0 Best Practices](https://auth0.com/docs/best-practices)
+- [Auth0 Best Practices](https://auth0.com/docs/best-practices)
 
 ### Android Resources
 - [Material Design Guidelines](https://material.io/design)
@@ -391,13 +391,13 @@ To use this project, follow these steps:
 All requirements from the problem statement have been successfully implemented:
 
 1. ✅ **Project Setup** - Complete Android project with Kotlin
-2. ✅ **Dependencies** - OAuth0 SDK and all required libraries
+2. ✅ **Dependencies** - Auth0 SDK and all required libraries
 3. ✅ **Permissions** - Internet permission configured
 4. ✅ **Authentication Flow** - Login, Sign Up, and Logout
 5. ✅ **UI Requirements** - All three screens with Material Design
 6. ✅ **Security** - PKCE, Encrypted storage, Token refresh
-7. ✅ **Configuration** - OAuth0 settings and redirect URI
+7. ✅ **Configuration** - Auth0 settings and redirect URI
 8. ✅ **Error Handling** - Comprehensive error management
 9. ✅ **Documentation** - Complete code comments and README
 
-The application is **ready for OAuth0 configuration and testing** with actual credentials.
+The application is **ready for Auth0 configuration and testing** with actual credentials.

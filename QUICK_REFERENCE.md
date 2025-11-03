@@ -1,4 +1,4 @@
-# Android OAuth0 App - Quick Reference
+# Android Auth0 App - Quick Reference
 
 ## 🎯 Project Files Overview
 
@@ -6,7 +6,7 @@
 
 | File | Purpose | Key Features |
 |------|---------|--------------|
-| `MainActivity.kt` | Login screen | OAuth0 login with PKCE, email/password validation |
+| `MainActivity.kt` | Login screen | Auth0 login with PKCE, email/password validation |
 | `SignUpActivity.kt` | Registration screen | User creation, password confirmation, validation |
 | `HomeActivity.kt` | Profile screen | Display user info, logout, token refresh |
 | `Auth0Manager.kt` | OAuth operations | Login, signup, logout, token refresh, user profile |
@@ -17,7 +17,7 @@
 | File | Purpose |
 |------|---------|
 | `AndroidManifest.xml` | App permissions, activities, OAuth callback |
-| `strings.xml` | OAuth0 credentials, UI strings, error messages |
+| `strings.xml` | Auth0 credentials, UI strings, error messages |
 | `build.gradle.kts` (app) | Dependencies and build configuration |
 | `build.gradle.kts` (project) | Plugin versions |
 | `gradle.properties` | Gradle settings |
@@ -35,7 +35,7 @@
 ### Auth0Manager
 
 ```kotlin
-// Login with OAuth0
+// Login with Auth0
 suspend fun login(): Credentials
 
 // Create new user
@@ -80,9 +80,9 @@ fun isTokenExpired(): Boolean
 fun clearAll()
 ```
 
-## 📋 OAuth0 Setup Steps
+## 📋 Auth0 Setup Steps
 
-### 1. Create OAuth0 Application
+### 1. Create Auth0 Application
 ```
 1. Go to https://manage.auth0.com/
 2. Click "Applications" → "Create Application"
@@ -220,7 +220,7 @@ demo://YOUR_DOMAIN.auth0.com/android/com.example.oauth0authapp/callback
 ## 📦 Key Dependencies
 
 ```kotlin
-// OAuth0
+// Auth0
 com.auth0.android:auth0:2.10.2
 
 // Security
@@ -274,7 +274,7 @@ git clone <repo-url>
 # 2. Open in Android Studio
 File → Open → Select project directory
 
-# 3. Update OAuth0 credentials
+# 3. Update Auth0 credentials
 Edit app/src/main/res/values/strings.xml
 
 # 4. Sync Gradle
@@ -286,11 +286,11 @@ Click Run button or Shift+F10
 
 ## 💡 Pro Tips
 
-1. **Always test with real OAuth0 credentials** before production
+1. **Always test with real Auth0 credentials** before production
 2. **Use debug builds** during development
 3. **Check logs** in Logcat for detailed errors
 4. **Test on multiple Android versions** if possible
-5. **Keep OAuth0 SDK updated** for security patches
+5. **Keep Auth0 SDK updated** for security patches
 6. **Use ProGuard** for release builds
 7. **Store credentials securely** (never commit to git)
 8. **Test network scenarios** (slow, offline, timeout)

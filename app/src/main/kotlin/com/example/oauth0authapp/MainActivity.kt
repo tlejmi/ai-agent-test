@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
         // Launch coroutine for async operation
         lifecycleScope.launch {
             try {
-                // Perform OAuth0 login with PKCE
+                // Perform Auth0 login with PKCE
                 val credentials = auth0Manager.login()
                 
                 // Fetch user profile after successful login
