@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.auth0.android.authentication.AuthenticationException
@@ -47,6 +48,14 @@ class HomeActivity : AppCompatActivity() {
         // Initialize UI components
         initViews()
         setupListeners()
+        
+        // Disable back navigation (user must use logout button)
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Do nothing - prevent back navigation for security
+                // User must use logout button
+            }
+        })
         
         // Load user profile
         loadUserProfile()
@@ -242,14 +251,6 @@ class HomeActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
-    }
-
-    /**
-     * Prevent going back to previous screens after logout
-     */
-    override fun onBackPressed() {
-        // Do nothing - prevent back navigation
-        // User must use logout button
     }
 
     /**
