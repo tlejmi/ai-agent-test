@@ -17,7 +17,7 @@ import java.io.IOException
 
 /**
  * SignUpActivity - Sign Up Screen
- * Handles new user registration using OAuth0 Management API.
+ * Handles new user registration using Auth0 Management API.
  * Validates email, password, and confirm password fields.
  */
 class SignUpActivity : AppCompatActivity() {

@@ -17,7 +17,7 @@ import java.io.IOException
 
 /**
  * MainActivity - Login Screen
- * Handles user authentication using OAuth0 SDK with PKCE flow.
+ * Handles user authentication using Auth0 SDK with PKCE flow.
  */
 class MainActivity : AppCompatActivity() {
 

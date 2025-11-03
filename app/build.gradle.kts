@@ -14,7 +14,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        // OAuth0 configuration
+        // Auth0 configuration
         manifestPlaceholders["auth0Domain"] = "@string/com_auth0_domain"
         manifestPlaceholders["auth0Scheme"] = "demo"
     }
@@ -50,7 +50,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     
-    // OAuth0 SDK
+    // Auth0 SDK
     implementation("com.auth0.android:auth0:2.10.2")
     
     // Coroutines for async operations
@@ -64,7 +64,7 @@ dependencies {
     // Security for encrypted storage
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     
-    // OkHttp for network requests (used by OAuth0)
+    // OkHttp for network requests (used by Auth0)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     

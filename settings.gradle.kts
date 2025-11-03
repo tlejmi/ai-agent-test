@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OAuth0AuthApp"
+rootProject.name = "Auth0AuthApp"
 include(":app")

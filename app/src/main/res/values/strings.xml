@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OAuth0 Auth App</string>
+    <string name="app_name">Auth0 Auth App</string>
     
-    <!-- OAuth0 Configuration -->
-    <!-- Replace these with your actual OAuth0 credentials -->
+    <!-- Auth0 Configuration -->
+    <!-- Replace these with your actual Auth0 credentials -->
     <string name="com_auth0_domain">YOUR_AUTH0_DOMAIN.auth0.com</string>
     <string name="com_auth0_client_id">YOUR_CLIENT_ID</string>
     
