@@ -50,12 +50,78 @@ jobs:
           ${{ runner.os }}-gradle-
     
     - name: Build project
-      run: ./gradlew assembleDebug --stacktrace
-      continue-on-error: false
+      id: build
+      run: ./gradlew assembleDebug --stacktrace 2>&1 | tee build.log
+      continue-on-error: true
     
     - name: Run unit tests
-      run: ./gradlew testDebugUnitTest --stacktrace
-      continue-on-error: false
+      id: test
+      run: ./gradlew testDebugUnitTest --stacktrace 2>&1 | tee test.log
+      continue-on-error: true
+    
+    - name: Comment build errors on PR
+      if: failure() && steps.build.outcome == 'failure' && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          let buildLog = '';
+          try {
+            buildLog = fs.readFileSync('build.log', 'utf8');
+          } catch (e) {
+            buildLog = 'Build log not available';
+          }
+          
+          // Extract error messages
+          const errorLines = buildLog.split('\n').filter(line => 
+            line.includes('ERROR') || 
+            line.includes('FAILURE') || 
+            line.includes('error:') ||
+            line.includes('Failed to')
+          ).slice(0, 20);
+          
+          const errorMessage = errorLines.length > 0 ? errorLines.join('\n') : buildLog.slice(-2000);
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `## ❌ Build Failed\n\n<details><summary>Build Error Details</summary>\n\n\`\`\`\n${errorMessage}\n\`\`\`\n\n</details>\n\nPlease check the [workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for full details.`
+          });
+    
+    - name: Comment test errors on PR
+      if: failure() && steps.test.outcome == 'failure' && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          let testLog = '';
+          try {
+            testLog = fs.readFileSync('test.log', 'utf8');
+          } catch (e) {
+            testLog = 'Test log not available';
+          }
+          
+          // Extract test failures
+          const failureLines = testLog.split('\n').filter(line => 
+            line.includes('FAILED') || 
+            line.includes('AssertionError') ||
+            line.includes('Exception:') ||
+            line.includes('  at ')
+          ).slice(0, 30);
+          
+          const failureMessage = failureLines.length > 0 ? failureLines.join('\n') : testLog.slice(-2000);
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `## ❌ Tests Failed\n\n<details><summary>Test Failure Details</summary>\n\n\`\`\`\n${failureMessage}\n\`\`\`\n\n</details>\n\nPlease check the [workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for full details.`
+          });
+    
+    - name: Fail workflow if build or tests failed
+      if: steps.build.outcome == 'failure' || steps.test.outcome == 'failure'
+      run: exit 1
     
     - name: Generate test report
       if: always()

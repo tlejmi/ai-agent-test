@@ -4,8 +4,19 @@
     
     <!-- Auth0 Configuration -->
     <!-- Replace these with your actual Auth0 credentials -->
-    <string name="com_auth0_domain">YOUR_AUTH0_DOMAIN.auth0.com</string>
-    <string name="com_auth0_client_id">YOUR_CLIENT_ID</string>
+    <!-- 
+    To set up Auth0:
+    1. Sign up at https://auth0.com/
+    2. Create a new "Native" application
+    3. Get your Domain (e.g., "your-tenant.us.auth0.com")
+    4. Get your Client ID from the application settings
+    5. In Auth0 Dashboard, configure:
+       - Allowed Callback URLs: demo://YOUR_DOMAIN/android/com.example.oauth0authapp/callback
+       - Allowed Logout URLs: demo://YOUR_DOMAIN/android/com.example.oauth0authapp/callback
+    6. Enable "Username-Password-Authentication" in Database connections
+    -->
+    <string name="com_auth0_domain">dev-example.us.auth0.com</string>
+    <string name="com_auth0_client_id">YOUR_CLIENT_ID_HERE</string>
     
     <!-- Activity Titles -->
     <string name="sign_up">Sign Up</string>
