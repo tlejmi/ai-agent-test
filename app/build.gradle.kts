@@ -17,6 +17,9 @@ android {
         // Auth0 configuration
         manifestPlaceholders["auth0Domain"] = "@string/com_auth0_domain"
         manifestPlaceholders["auth0Scheme"] = "demo"
+        
+        // Test instrumentation runner
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -70,4 +73,18 @@ dependencies {
     
     // Gson for JSON parsing
     implementation("com.google.code.gson:gson:2.10.1")
+    
+    // Testing dependencies
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.mockito:mockito-core:5.7.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.1.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.robolectric:robolectric:4.11.1")
+    
+    // Android testing dependencies
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
 }
