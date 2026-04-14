@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Test Auth0 Configuration -->
+    <!-- These are mock values for testing purposes only -->
+    <string name="com_auth0_domain">test-domain.auth0.com</string>
+    <string name="com_auth0_client_id">test_client_id_123456</string>
+</resources>

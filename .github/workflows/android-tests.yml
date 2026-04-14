@@ -1,0 +1,167 @@
+name: Android Unit Tests
+
+on:
+  push:
+    branches: [ main, develop, 'copilot/**' ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+    
+    - name: Accept Android SDK licenses
+      run: yes | sdkmanager --licenses || true
+    
+    - name: Install Android SDK components
+      run: |
+        sdkmanager "platforms;android-34"
+        sdkmanager "build-tools;34.0.0"
+        sdkmanager "platform-tools"
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+    
+    - name: Build project
+      id: build
+      run: ./gradlew assembleDebug --stacktrace 2>&1 | tee build.log
+      continue-on-error: true
+    
+    - name: Run unit tests
+      id: test
+      run: ./gradlew testDebugUnitTest --stacktrace 2>&1 | tee test.log
+      continue-on-error: true
+    
+    - name: Comment build errors on PR
+      if: failure() && steps.build.outcome == 'failure' && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          let buildLog = '';
+          try {
+            buildLog = fs.readFileSync('build.log', 'utf8');
+          } catch (e) {
+            buildLog = 'Build log not available';
+          }
+          
+          // Extract error messages
+          const errorLines = buildLog.split('\n').filter(line => 
+            line.includes('ERROR') || 
+            line.includes('FAILURE') || 
+            line.includes('error:') ||
+            line.includes('Failed to')
+          ).slice(0, 20);
+          
+          const errorMessage = errorLines.length > 0 ? errorLines.join('\n') : buildLog.slice(-2000);
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `## ❌ Build Failed\n\n<details><summary>Build Error Details</summary>\n\n\`\`\`\n${errorMessage}\n\`\`\`\n\n</details>\n\nPlease check the [workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for full details.`
+          });
+    
+    - name: Comment test errors on PR
+      if: failure() && steps.test.outcome == 'failure' && github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          let testLog = '';
+          try {
+            testLog = fs.readFileSync('test.log', 'utf8');
+          } catch (e) {
+            testLog = 'Test log not available';
+          }
+          
+          // Extract test failures
+          const failureLines = testLog.split('\n').filter(line => 
+            line.includes('FAILED') || 
+            line.includes('AssertionError') ||
+            line.includes('Exception:') ||
+            line.includes('  at ')
+          ).slice(0, 30);
+          
+          const failureMessage = failureLines.length > 0 ? failureLines.join('\n') : testLog.slice(-2000);
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `## ❌ Tests Failed\n\n<details><summary>Test Failure Details</summary>\n\n\`\`\`\n${failureMessage}\n\`\`\`\n\n</details>\n\nPlease check the [workflow run](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) for full details.`
+          });
+    
+    - name: Fail workflow if build or tests failed
+      if: steps.build.outcome == 'failure' || steps.test.outcome == 'failure'
+      run: exit 1
+    
+    - name: Generate test report
+      if: always()
+      run: ./gradlew testDebugUnitTest --continue || true
+    
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: |
+          app/build/test-results/testDebugUnitTest/
+          app/build/reports/tests/testDebugUnitTest/
+        retention-days: 30
+    
+    - name: Upload test reports
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-reports
+        path: app/build/reports/tests/testDebugUnitTest/
+        retention-days: 30
+    
+    - name: Publish test results
+      if: always()
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      with:
+        files: |
+          app/build/test-results/testDebugUnitTest/**/*.xml
+        check_name: Unit Test Results
+        comment_mode: always
+    
+    - name: Test Summary
+      if: always()
+      run: |
+        echo "## Test Results Summary" >> $GITHUB_STEP_SUMMARY
+        if [ -f app/build/test-results/testDebugUnitTest/TEST-*.xml ]; then
+          echo "✅ Tests completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 Results available in artifacts" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ No test results found" >> $GITHUB_STEP_SUMMARY
+        fi
